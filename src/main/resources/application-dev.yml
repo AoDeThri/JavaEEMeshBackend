@@ -1,0 +1,12 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    username:
+    password:
+    url:
+    schema: classpath:db/script.sql
+
+mybatis:
+  type-aliases-package: com.mesh.backend.models
