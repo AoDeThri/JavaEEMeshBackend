@@ -1,8 +1,10 @@
 package com.mesh.backend.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.mesh.backend.datas.PasswordData;
 import com.mesh.backend.datas.UserData;
 import com.mesh.backend.entity.Users;
+import com.mesh.backend.helper.PasswordVerifier;
 import com.mesh.backend.mapper.UsersMapper;
 import com.mesh.backend.service.IUsersService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -26,13 +28,13 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
         return getOne(queryWrapper, false);
     }
 
-    //TODO: add encryption algorithm
     @Override
     public boolean saveNewUser(UserData userData) {
         Users user = new Users();
         user.setEmail(userData.username);
-        user.setPasswordDigest(userData.password);
-        user.setPasswordSalt(userData.password);
+        PasswordData passwordData = PasswordVerifier.encryption(userData.password);
+        user.setPasswordDigest(passwordData.passwordDigest);
+        user.setPasswordSalt(passwordData.passwordSalt);
         user.setNickname(userData.username);
         return save(user);
     }

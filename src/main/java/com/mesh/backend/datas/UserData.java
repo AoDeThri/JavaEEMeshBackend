@@ -20,10 +20,11 @@ public class UserData extends BaseData{
     public Preference preference;
 
 
-    public UserData(boolean isSuccess, String msg, Users users,
-                    Preference preference, String role){
-        super(isSuccess, msg);
-        this.preference = preference;
+    public UserData(Users users, String role, int preferenceTeam){
+        super(true, "");
+        this.preference = new Preference(users.getColorPreference(),
+                users.getRevealedPreference(), users.getLayoutPreference(),
+                preferenceTeam);
         this.username = users.getEmail();
         this.nickname = users.getNickname();
         this.gender = users.getGender();
