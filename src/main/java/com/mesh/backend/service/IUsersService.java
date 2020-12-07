@@ -1,5 +1,6 @@
 package com.mesh.backend.service;
 
+import com.mesh.backend.datas.UserData;
 import com.mesh.backend.entity.Users;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,4 +14,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IUsersService extends IService<Users> {
 
+    Users getUserByUsername(String username);
+
+    boolean saveNewUser(UserData userData);
 }
