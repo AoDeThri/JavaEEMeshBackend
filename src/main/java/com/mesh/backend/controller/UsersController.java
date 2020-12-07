@@ -46,7 +46,8 @@ public class UsersController {
         }
         boolean result = usersService.saveNewUser(userData);
         if(result){
-            return new BaseReturnValue(0, userData);
+            Users users = usersService.getUserByUsername(userData.username);
+            return new BaseReturnValue(0, new UserData(users, "user", -1));
         }else{
             BaseData data = new BaseData("Unexpected error.");
             return new BaseReturnValue(1, data);

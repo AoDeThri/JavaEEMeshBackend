@@ -34,6 +34,7 @@ public class UserData extends BaseData{
         this.birthday = users.getBirthday();
         this.avatar = users.getAvatar();
         this.role = role;
+        //TODO: INFO: teams
     }
 
     public UserData(){

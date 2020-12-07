@@ -217,4 +217,18 @@ public class Users extends Model<Users> {
         ", Birthday=" + Birthday +
         "}";
     }
+
+    public Users(){
+        this.CreatedTime = LocalDateTime.now();
+        this.UpdatedTime = LocalDateTime.now();
+        this.Address = "";
+        this.Gender = 0;
+        this.Birthday = LocalDateTime.now();
+        this.ColorPreference = "blue";
+        this.LayoutPreference = "default";
+        this.Description = "";
+        this.Status = 1;
+        this.RevealedPreference = "card";
+        this.Avatar = "";
+    }
 }
