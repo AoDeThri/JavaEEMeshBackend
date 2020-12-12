@@ -30,4 +30,9 @@ public class ProjectData {
     public ProjectData(){
 
     }
+    public ProjectData(String projectName, int projectId, String adminName){
+        this.projectName = projectName;
+        this.projectId = projectId;
+        this.adminName = adminName;
+    }
 }

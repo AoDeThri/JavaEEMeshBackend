@@ -1,6 +1,8 @@
 package com.mesh.backend.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.mesh.backend.controller.ProjectmemosController;
+import com.mesh.backend.datas.ProjectData;
 import com.mesh.backend.datas.ProjectRequestData;
 import com.mesh.backend.entity.*;
 import com.mesh.backend.mapper.ProjectsMapper;
@@ -98,5 +100,18 @@ public class ProjectsServiceImpl extends ServiceImpl<ProjectsMapper, Projects> i
         project.setName(projectName);
         project.setUpdatedTime(LocalDateTime.now());
         return saveOrUpdate(project);
+    }
+
+    @Override
+    public List<ProjectData> getTeamProjects(int teamId) {
+        QueryWrapper<Projects> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("TeamId", teamId);
+        List<Projects> projectsArrayList = list(queryWrapper);
+        List<ProjectData> projectDataList = new ArrayList<>();
+        for(Projects projects: projectsArrayList){
+            Users admin = usersService.getById(projects.getAdminId());
+            projectDataList.add(new ProjectData(projects.getName(), projects.getId(), admin.getEmail()));
+        }
+        return projectDataList;
     }
 }

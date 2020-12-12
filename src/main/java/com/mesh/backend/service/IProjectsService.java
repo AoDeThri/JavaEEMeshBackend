@@ -1,5 +1,6 @@
 package com.mesh.backend.service;
 
+import com.mesh.backend.datas.ProjectData;
 import com.mesh.backend.datas.ProjectRequestData;
 import com.mesh.backend.entity.Projects;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -26,5 +27,7 @@ public interface IProjectsService extends IService<Projects> {
     List<Users> getProjectMembers(int projectId);
 
     boolean updateProject(Projects project, boolean isPublic, String projectName);
+
+    List<ProjectData> getTeamProjects(int teamId);
 
 }

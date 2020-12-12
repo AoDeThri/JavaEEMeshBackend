@@ -11,4 +11,8 @@ public class BaseTeamData extends BaseData{
         super(true, "");
         team = new TeamData(teams, users, adminName);
     }
+    public BaseTeamData(Teams teams, List<Users> users, String adminName, List<ProjectData> projectDataList){
+        super(true, "");
+        team = new TeamData(teams, users, adminName, projectDataList);
+    }
 }

@@ -7,6 +7,7 @@ import com.mesh.backend.entity.Teams;
 import com.mesh.backend.entity.Users;
 import com.mesh.backend.service.ITeamsService;
 import com.mesh.backend.service.impl.CooperationsServiceImpl;
+import com.mesh.backend.service.impl.ProjectsServiceImpl;
 import com.mesh.backend.service.impl.TeamsServiceImpl;
 import com.mesh.backend.service.impl.UsersServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,9 @@ public class TeamsController {
 
     @Autowired
     private CooperationsServiceImpl cooperationsService;
+
+    @Autowired
+    private ProjectsServiceImpl projectsService;
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST)
@@ -87,7 +91,8 @@ public class TeamsController {
 
         cooperationsService.addAccessCount(teamId, users.getId());
         List<Users> usersList = teamsService.getTeamMembers(teamId);
-        BaseTeamData baseTeamData = new BaseTeamData(team, usersList, admin.getEmail());
+        List<ProjectData> projectDataList = projectsService.getTeamProjects(teamId);
+        BaseTeamData baseTeamData = new BaseTeamData(team, usersList, admin.getEmail(), projectDataList);
         return new BaseReturnValue(0, baseTeamData);
     }
 
@@ -120,7 +125,8 @@ public class TeamsController {
         }
 
         List<Users> usersList = teamsService.getTeamMembers(requestData.teamId);
-        BaseTeamData baseTeamData = new BaseTeamData(team, usersList, users.getEmail());
+        List<ProjectData> projectDataList = projectsService.getTeamProjects(requestData.teamId);
+        BaseTeamData baseTeamData = new BaseTeamData(team, usersList, users.getEmail(), projectDataList);
         return new BaseReturnValue(0, baseTeamData);
     }
 
