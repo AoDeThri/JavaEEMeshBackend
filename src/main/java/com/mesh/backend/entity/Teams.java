@@ -85,4 +85,8 @@ public class Teams extends Model<Teams> {
         ", UpdatedTime=" + UpdatedTime +
         "}";
     }
+    public Teams(){
+        this.CreatedTime = LocalDateTime.now();
+        this.UpdatedTime = LocalDateTime.now();
+    }
 }

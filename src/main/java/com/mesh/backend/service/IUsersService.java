@@ -16,5 +16,5 @@ public interface IUsersService extends IService<Users> {
 
     Users getUserByUsername(String username);
 
-    boolean saveNewUser(UserData userData);
+    Users saveNewUser(UserData userData);
 }

@@ -29,13 +29,14 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
     }
 
     @Override
-    public boolean saveNewUser(UserData userData) {
+    public Users saveNewUser(UserData userData) {
         Users user = new Users();
         user.setEmail(userData.username);
         PasswordData passwordData = PasswordVerifier.encryption(userData.password);
         user.setPasswordDigest(passwordData.passwordDigest);
         user.setPasswordSalt(passwordData.passwordSalt);
         user.setNickname(userData.username);
-        return save(user);
+        boolean result = save(user);
+        return result? user : null;
     }
 }

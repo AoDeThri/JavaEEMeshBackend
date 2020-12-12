@@ -44,10 +44,9 @@ public class UsersController {
             BaseData data = new BaseData("User already exists.");
             return new BaseReturnValue(101, data);
         }
-        boolean result = usersService.saveNewUser(userData);
-        if(result){
-            Users users = usersService.getUserByUsername(userData.username);
-            return new BaseReturnValue(0, new UserData(users, "user", -1));
+        Users result = usersService.saveNewUser(userData);
+        if(result != null){
+            return new BaseReturnValue(0, new UserData(result, "user", -1));
         }else{
             BaseData data = new BaseData("Unexpected error.");
             return new BaseReturnValue(1, data);

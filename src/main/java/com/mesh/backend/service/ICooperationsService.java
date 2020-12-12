@@ -2,6 +2,9 @@ package com.mesh.backend.service;
 
 import com.mesh.backend.entity.Cooperations;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.mesh.backend.entity.Teams;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,15 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ICooperationsService extends IService<Cooperations> {
 
+    boolean saveNewCooperation(int teamId, int userId);
+
+    boolean addAccessCount(int teamId, int userId);
+
+    boolean checkTeamMember(int teamId, int userId);
+
+    boolean checkTeamAdmin(Teams teams, int userId);
+
+    boolean quitTeam(int teamId, int userId);
+
+    List<Cooperations> getUserIds(int teamId);
 }

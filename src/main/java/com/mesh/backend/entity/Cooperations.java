@@ -82,4 +82,10 @@ public class Cooperations extends Model<Cooperations> {
         ", UpdatedTime=" + UpdatedTime +
         "}";
     }
+
+    public Cooperations(){
+        this.CreatedTime = LocalDateTime.now();
+        this.UpdatedTime = LocalDateTime.now();
+        this.AccessCount = 0;
+    }
 }
