@@ -78,12 +78,12 @@ public class TeamsController {
             return new BaseReturnValue(201, baseData);
         }
 
-        Users admin = usersService.getById(team.getAdminId());
-
         if(!cooperationsService.checkTeamMember(team.getId(), users.getId())){
             BaseData baseData = new BaseData("Permission denied.");
             return new BaseReturnValue(901, baseData);
         }
+
+        Users admin = usersService.getById(team.getAdminId());
 
         cooperationsService.addAccessCount(teamId, users.getId());
         List<Users> usersList = teamsService.getTeamMembers(teamId);
