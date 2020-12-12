@@ -10,6 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * <p>
  *  服务实现类
@@ -32,6 +36,9 @@ public class ProjectsServiceImpl extends ServiceImpl<ProjectsMapper, Projects> i
 
     @Autowired
     private DevelopsServiceImpl developsService;
+
+    @Autowired
+    private UsersServiceImpl usersService;
 
     @Transactional
     @Override
@@ -67,5 +74,29 @@ public class ProjectsServiceImpl extends ServiceImpl<ProjectsMapper, Projects> i
         develops.setProjectId(project.getId());
         develops.setUserId(adminId);
         return developsService.save(develops)? project : null;
+    }
+
+    @Override
+    public boolean checkProjectAdmin(Projects projects, int userId) {
+        return projects.getAdminId().equals(userId);
+    }
+
+    @Override
+    public List<Users> getProjectMembers(int projectId) {
+        ArrayList<Users> users = new ArrayList<>();
+
+        List<Develops> develops = developsService.getUserIds(projectId);
+        for(Develops c: develops){
+            users.add(usersService.getById(c.getUserId()));
+        }
+        return users;
+    }
+
+    @Override
+    public boolean updateProject(Projects project, boolean isPublic, String projectName) {
+        project.setPublicity(isPublic);
+        project.setName(projectName);
+        project.setUpdatedTime(LocalDateTime.now());
+        return saveOrUpdate(project);
     }
 }

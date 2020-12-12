@@ -13,7 +13,7 @@ public class ProjectData {
     public String projectName;
     public String adminName;
     public boolean isPublic;
-    ArrayList<MemberInfo> members;
+    public ArrayList<MemberInfo> members;
 
     public ProjectData(Projects projects, List<Users> users, String adminName){
         this.adminName = adminName;
