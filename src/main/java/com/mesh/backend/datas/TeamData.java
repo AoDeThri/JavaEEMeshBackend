@@ -5,14 +5,16 @@ import com.mesh.backend.entity.Users;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TeamData{
     public int teamId;
     public LocalDateTime createTime;
     public String teamName;
     public String adminName;
-    ArrayList<MemberInfo> members;
+    public ArrayList<MemberInfo> members;
     //TODO: INFO:teamProjects
 
 
