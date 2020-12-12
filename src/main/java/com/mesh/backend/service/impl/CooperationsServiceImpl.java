@@ -1,6 +1,7 @@
 package com.mesh.backend.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.mesh.backend.entity.Cooperations;
 import com.mesh.backend.entity.Teams;
 import com.mesh.backend.mapper.CooperationsMapper;
@@ -54,6 +55,12 @@ public class CooperationsServiceImpl extends ServiceImpl<CooperationsMapper, Coo
             return false;
         }
         cooperations.setAccessCount(cooperations.getAccessCount() + 1);
+        UpdateWrapper<Cooperations> updateWrapper = new UpdateWrapper<>();
+        Map<String, String> map = new HashMap<>();
+        map.put("TeamId", String.valueOf(teamId));
+        map.put("UserId", String.valueOf(userId));
+        updateWrapper.allEq(map);
+        saveOrUpdate(cooperations, updateWrapper);
         return true;
     }
 
@@ -64,7 +71,6 @@ public class CooperationsServiceImpl extends ServiceImpl<CooperationsMapper, Coo
 
     @Override
     public List<Cooperations> getUserIds(int teamId) {
-        ArrayList<Integer> list = new ArrayList<>();
         QueryWrapper<Cooperations> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("UserId").eq("TeamId", teamId);
         return list(queryWrapper);
