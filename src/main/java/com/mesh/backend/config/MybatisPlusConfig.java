@@ -5,9 +5,11 @@ import com.baomidou.mybatisplus.extension.MybatisMapWrapperFactory;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.boot.autoconfigure.ConfigurationCustomizer;
+import org.mybatis.spring.transaction.SpringManagedTransactionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 
@@ -23,6 +25,7 @@ public class MybatisPlusConfig {
                 PathMatchingResourcePatternResolver().getResources("classpath:mapper/*.xml"));
         sqlSessionFactory.setConfiguration(new MybatisConfiguration());
         sqlSessionFactory.getConfiguration().setMapUnderscoreToCamelCase(false);
+        sqlSessionFactory.setTransactionFactory(new SpringManagedTransactionFactory());
         return sqlSessionFactory.getObject();
     }
 
