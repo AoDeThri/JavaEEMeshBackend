@@ -107,7 +107,7 @@ public class TeamsController {
             return new BaseReturnValue(201, baseData);
         }
 
-        if(!cooperationsService.checkTeamAdmin(team, users.getId())){
+        if(!teamsService.checkTeamAdmin(team, users.getId())){
             BaseData baseData = new BaseData("Permission denied.");
             return new BaseReturnValue(901, baseData);
         }
@@ -140,7 +140,7 @@ public class TeamsController {
             return new BaseReturnValue(201, baseData);
         }
 
-        if(!cooperationsService.checkTeamAdmin(team, users.getId())){
+        if(!teamsService.checkTeamAdmin(team, users.getId())){
             BaseData baseData = new BaseData("Permission denied.");
             return new BaseReturnValue(901, baseData);
         }
@@ -207,7 +207,7 @@ public class TeamsController {
             return new BaseReturnValue(202, baseData);
         }
 
-        if(!cooperationsService.checkTeamAdmin(team, users.getId())){
+        if(!teamsService.checkTeamAdmin(team, users.getId())){
             BaseData baseData = new BaseData("Permission denied.");
             return new BaseReturnValue(901, baseData);
         }
@@ -243,7 +243,7 @@ public class TeamsController {
             return new BaseReturnValue(201, baseData);
         }
 
-        if(!cooperationsService.checkTeamAdmin(team, users.getId())){
+        if(!teamsService.checkTeamAdmin(team, users.getId())){
             BaseData baseData = new BaseData("Permission denied.");
             return new BaseReturnValue(901, baseData);
         }
