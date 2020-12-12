@@ -2,6 +2,7 @@ package com.mesh.backend.service.impl;
 
 import com.mesh.backend.datas.TeamRequestData;
 import com.mesh.backend.entity.Cooperations;
+import com.mesh.backend.entity.Teammemocollections;
 import com.mesh.backend.entity.Teams;
 import com.mesh.backend.entity.Users;
 import com.mesh.backend.mapper.TeamsMapper;
@@ -33,16 +34,25 @@ public class TeamsServiceImpl extends ServiceImpl<TeamsMapper, Teams> implements
     @Autowired
     private UsersServiceImpl usersService;
 
+    @Autowired
+    private TeammemocollectionsServiceImpl teammemocollectionsService;
+
     @Override
     @Transactional
     public Teams saveNewTeam(TeamRequestData teamRequestData, int adminId) {
         Teams teams = new Teams();
         teams.setAdminId(adminId);
         teams.setName(teamRequestData.teamName);
-        boolean saveTeamResult = save(teams);
-        if(!saveTeamResult) {
+        if(!save(teams)){
             return null;
         }
+
+        Teammemocollections teammemocollections = new Teammemocollections();
+        teammemocollections.setTeamId(teams.getId());
+        if(!teammemocollectionsService.save(teammemocollections)){
+            return null;
+        }
+
         Cooperations cooperations = new Cooperations();
         cooperations.setAccessCount(0);
         cooperations.setTeamId(teams.getId());
@@ -66,5 +76,10 @@ public class TeamsServiceImpl extends ServiceImpl<TeamsMapper, Teams> implements
         team.setName(teamName);
         team.setUpdatedTime(LocalDateTime.now());
         return saveOrUpdate(team);
+    }
+
+    @Override
+    public boolean checkTeamAdmin(Teams teams, int userId) {
+        return teams.getAdminId() == userId;
     }
 }
