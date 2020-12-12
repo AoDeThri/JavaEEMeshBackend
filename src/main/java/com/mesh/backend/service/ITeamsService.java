@@ -22,4 +22,7 @@ public interface ITeamsService extends IService<Teams> {
     List<Users> getTeamMembers(int teamId);
 
     boolean updateTeam(Teams team, String teamName);
+
+    boolean checkTeamAdmin(Teams teams, int userId);
+
 }

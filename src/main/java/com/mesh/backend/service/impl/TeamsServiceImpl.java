@@ -80,6 +80,6 @@ public class TeamsServiceImpl extends ServiceImpl<TeamsMapper, Teams> implements
 
     @Override
     public boolean checkTeamAdmin(Teams teams, int userId) {
-        return teams.getAdminId() == userId;
+        return teams.getAdminId().equals(userId);
     }
 }

@@ -63,11 +63,6 @@ public class CooperationsServiceImpl extends ServiceImpl<CooperationsMapper, Coo
     }
 
     @Override
-    public boolean checkTeamAdmin(Teams teams, int userId) {
-        return teams.getAdminId() == userId;
-    }
-
-    @Override
     public List<Cooperations> getUserIds(int teamId) {
         ArrayList<Integer> list = new ArrayList<>();
         QueryWrapper<Cooperations> queryWrapper = new QueryWrapper<>();

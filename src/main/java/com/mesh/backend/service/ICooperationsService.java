@@ -22,8 +22,6 @@ public interface ICooperationsService extends IService<Cooperations> {
 
     boolean checkTeamMember(int teamId, int userId);
 
-    boolean checkTeamAdmin(Teams teams, int userId);
-
     boolean quitTeam(int teamId, int userId);
 
     List<Cooperations> getUserIds(int teamId);
