@@ -71,4 +71,9 @@ public class Develops extends Model<Develops> {
         ", UpdatedTime=" + UpdatedTime +
         "}";
     }
+
+    public Develops(){
+        this.CreatedTime = LocalDateTime.now();
+        this.UpdatedTime = LocalDateTime.now();
+    }
 }

@@ -85,4 +85,10 @@ public class Teammemocollections extends Model<Teammemocollections> {
         ", UpdatedTime=" + UpdatedTime +
         "}";
     }
+
+    public Teammemocollections(){
+        this.Description = "";
+        this.CreatedTime = LocalDateTime.now();
+        this.UpdatedTime = LocalDateTime.now();
+    }
 }

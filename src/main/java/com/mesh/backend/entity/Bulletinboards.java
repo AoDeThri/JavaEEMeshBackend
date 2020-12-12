@@ -85,4 +85,10 @@ public class Bulletinboards extends Model<Bulletinboards> {
         ", ProjectId=" + ProjectId +
         "}";
     }
+
+    public Bulletinboards(){
+        this.CreatedTime = LocalDateTime.now();
+        this.UpdatedTime = LocalDateTime.now();
+        this.description = "";
+    }
 }

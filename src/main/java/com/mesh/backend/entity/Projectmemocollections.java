@@ -85,4 +85,9 @@ public class Projectmemocollections extends Model<Projectmemocollections> {
         ", UpdatedTime=" + UpdatedTime +
         "}";
     }
+    public Projectmemocollections(){
+        this.Description = "";
+        this.CreatedTime = LocalDateTime.now();
+        this.UpdatedTime = LocalDateTime.now();
+    }
 }

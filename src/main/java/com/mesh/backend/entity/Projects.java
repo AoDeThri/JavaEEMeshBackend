@@ -118,4 +118,9 @@ public class Projects extends Model<Projects> {
         ", UpdatedTime=" + UpdatedTime +
         "}";
     }
+
+    public Projects(){
+        this.CreatedTime = LocalDateTime.now();
+        this.UpdatedTime = LocalDateTime.now();
+    }
 }

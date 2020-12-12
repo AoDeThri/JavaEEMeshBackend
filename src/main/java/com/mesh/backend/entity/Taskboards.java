@@ -85,4 +85,10 @@ public class Taskboards extends Model<Taskboards> {
         ", UpdatedTime=" + UpdatedTime +
         "}";
     }
+
+    public Taskboards(){
+        this.Description = "";
+        this.CreatedTime = LocalDateTime.now();
+        this.UpdatedTime = LocalDateTime.now();
+    }
 }
