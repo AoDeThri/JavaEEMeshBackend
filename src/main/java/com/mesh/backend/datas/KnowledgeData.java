@@ -1,5 +1,8 @@
 package com.mesh.backend.datas;
 
+import com.mesh.backend.entity.Projectmemos;
+import com.mesh.backend.entity.Teammemos;
+
 import java.time.LocalDateTime;
 
 /**
@@ -20,5 +23,33 @@ public class KnowledgeData {
         this.hyperlink = hyperlink;
         this.uploaderName = uploaderName;
         this.createTime = createTime;
+    }
+
+    /**
+     * 项目知识库
+     *
+     * @param projectmemos
+     * @param uploaderName
+     */
+    public KnowledgeData(Projectmemos projectmemos, String uploaderName) {
+        this.knowledgeId = projectmemos.getId();
+        this.knowledgeName = projectmemos.getTitle();
+        this.hyperlink = projectmemos.getText();
+        this.uploaderName = uploaderName;
+        this.createTime = projectmemos.getCreatedTime();
+    }
+
+    /**
+     * 团队知识库
+     *
+     * @param teammemos
+     * @param uploaderName
+     */
+    public KnowledgeData(Teammemos teammemos, String uploaderName) {
+        this.knowledgeId = teammemos.getId();
+        this.knowledgeName = teammemos.getTitle();
+        this.hyperlink = teammemos.getText();
+        this.uploaderName = uploaderName;
+        this.createTime = teammemos.getCreatedTime();
     }
 }

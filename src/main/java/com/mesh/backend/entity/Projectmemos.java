@@ -3,12 +3,13 @@ package com.mesh.backend.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.time.LocalDateTime;
 import java.io.Serializable;
 
 /**
  * <p>
- * 
+ * 项目知识库
  * </p>
  *
  * @author aodethri
@@ -98,13 +99,13 @@ public class Projectmemos extends Model<Projectmemos> {
     @Override
     public String toString() {
         return "Projectmemos{" +
-        "Id=" + Id +
-        ", Title=" + Title +
-        ", Text=" + Text +
-        ", CollectionId=" + CollectionId +
-        ", UserId=" + UserId +
-        ", CreatedTime=" + CreatedTime +
-        ", UpdatedTime=" + UpdatedTime +
-        "}";
+                "Id=" + Id +
+                ", Title=" + Title +
+                ", Text=" + Text +
+                ", CollectionId=" + CollectionId +
+                ", UserId=" + UserId +
+                ", CreatedTime=" + CreatedTime +
+                ", UpdatedTime=" + UpdatedTime +
+                "}";
     }
 }
