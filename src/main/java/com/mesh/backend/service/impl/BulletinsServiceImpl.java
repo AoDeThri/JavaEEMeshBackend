@@ -39,6 +39,7 @@ public class BulletinsServiceImpl extends ServiceImpl<BulletinsMapper, Bulletins
         bulletin.setBoardId(boardId);
         bulletin.setTitle(requestData.bulletinName);
         bulletin.setContent(requestData.description);
+        //TODO: bulletin feed
         boolean result = save(bulletin);
         return result? bulletin : null;
     }
