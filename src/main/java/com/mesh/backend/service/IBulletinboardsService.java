@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IBulletinboardsService extends IService<Bulletinboards> {
 
+    int getBoardIdByProjectId(int projectId);
 }

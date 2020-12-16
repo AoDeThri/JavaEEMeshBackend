@@ -12,6 +12,7 @@ public class UserData extends BaseData{
     public int status;
     public String address;
     public String description;
+    //TODO: modify to yyyy-MM-dd
     public LocalDateTime birthday;
     public String avatar;
     public String role;
