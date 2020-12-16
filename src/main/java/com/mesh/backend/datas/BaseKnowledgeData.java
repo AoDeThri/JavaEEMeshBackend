@@ -9,7 +9,7 @@ import com.mesh.backend.entity.Teammemos;
  * @author xuedixuedi
  */
 public class BaseKnowledgeData extends BaseData {
-    public KnowledgeData knowledgeData;
+    public KnowledgeData knowledge;
 
     /**
      * 项目知识库
@@ -19,7 +19,7 @@ public class BaseKnowledgeData extends BaseData {
      */
     public BaseKnowledgeData(Projectmemos projectmemos, String uploaderName) {
         super(true, "");
-        knowledgeData = new KnowledgeData(projectmemos, uploaderName);
+        knowledge = new KnowledgeData(projectmemos, uploaderName);
     }
 
     /**
@@ -30,6 +30,6 @@ public class BaseKnowledgeData extends BaseData {
      */
     public BaseKnowledgeData(Teammemos teammemos, String uploaderName) {
         super(true, "");
-        knowledgeData = new KnowledgeData(teammemos, uploaderName);
+        knowledge = new KnowledgeData(teammemos, uploaderName);
     }
 }
