@@ -25,4 +25,6 @@ public interface ICooperationsService extends IService<Cooperations> {
     boolean quitTeam(int teamId, int userId);
 
     List<Cooperations> getUserIds(int teamId);
+
+    int getPreferenceTeam(int userId);
 }

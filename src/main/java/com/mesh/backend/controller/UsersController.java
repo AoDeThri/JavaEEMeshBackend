@@ -4,6 +4,7 @@ package com.mesh.backend.controller;
 import com.mesh.backend.datas.*;
 import com.mesh.backend.entity.Users;
 import com.mesh.backend.helper.PasswordVerifier;
+import com.mesh.backend.service.impl.CooperationsServiceImpl;
 import com.mesh.backend.service.impl.UsersServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,6 +28,9 @@ public class UsersController {
 
     @Autowired
     private UsersServiceImpl usersService;
+
+    @Autowired
+    private CooperationsServiceImpl cooperationsService;
 
     @ResponseBody
     @RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -62,8 +66,8 @@ public class UsersController {
         }
 
         //TODO: confirm and keep login status
-        //TODO: preferenceTeam
-        UserData data = new UserData(user, "user", -1);
+        UserData data = new UserData(user, "user",
+                cooperationsService.getPreferenceTeam(user.getId()));
         return new BaseReturnValue(0, data);
     }
 
@@ -134,8 +138,8 @@ public class UsersController {
             BaseData baseData = new BaseData("Unexpected error.");
             return new BaseReturnValue(1, baseData);
         }
-        //TODO: preference team
-        UserData userData = new UserData(updatedUser, "user", -1);
+        UserData userData = new UserData(updatedUser, "user",
+                cooperationsService.getPreferenceTeam(users.getId()));
         return new BaseReturnValue(0, userData);
     }
 

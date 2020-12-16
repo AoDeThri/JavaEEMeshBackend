@@ -85,4 +85,13 @@ public class CooperationsServiceImpl extends ServiceImpl<CooperationsMapper, Coo
         queryWrapper.allEq(map);
         return remove(queryWrapper);
     }
+
+    @Override
+    public int getPreferenceTeam(int userId) {
+        QueryWrapper<Cooperations> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("UserId", userId);
+        queryWrapper.orderByDesc("AccessCount", "TeamId");
+        Cooperations cooperations = getOne(queryWrapper, false);
+        return cooperations == null? -1: cooperations.getTeamId();
+    }
 }
