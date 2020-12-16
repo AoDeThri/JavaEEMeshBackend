@@ -96,4 +96,11 @@ public class Bulletins extends Model<Bulletins> {
         ", BoardId=" + BoardId +
         "}";
     }
+
+    public Bulletins(){
+        this.CreatedTime = LocalDateTime.now();
+        this.UpdatedTime = LocalDateTime.now();
+        this.Content = "";
+        this.Title = "";
+    }
 }

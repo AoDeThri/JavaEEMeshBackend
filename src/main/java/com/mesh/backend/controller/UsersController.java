@@ -1,16 +1,10 @@
 package com.mesh.backend.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.fasterxml.jackson.databind.deser.Deserializers;
-import com.mesh.backend.datas.BaseData;
-import com.mesh.backend.datas.BaseReturnValue;
-import com.mesh.backend.datas.PasswordData;
-import com.mesh.backend.datas.UserData;
+import com.mesh.backend.datas.*;
 import com.mesh.backend.entity.Users;
 import com.mesh.backend.helper.PasswordVerifier;
 import com.mesh.backend.service.impl.UsersServiceImpl;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.swing.text.StyledEditorKit;
 
 /**
  * <p>
@@ -73,6 +65,101 @@ public class UsersController {
         //TODO: preferenceTeam
         UserData data = new UserData(user, "user", -1);
         return new BaseReturnValue(0, data);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/preference/color", method = RequestMethod.POST)
+    public Object preferenceColor(@RequestBody UserRequestData requestData){
+        Users users = usersService.getUserByUsername(requestData.username);
+        if(users == null){
+            BaseData baseData = new BaseData("User status error.");
+            return new BaseReturnValue(2, baseData);
+        }
+
+        boolean result = usersService.updatePreferenceColor(users, requestData.preferenceColor);
+        if(!result){
+            BaseData data = new BaseData("Unexpected error.");
+            return new BaseReturnValue(1, data);
+        }
+        BaseData data = new BaseData(true,"");
+        return new BaseReturnValue(0, data);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/preference/layout", method = RequestMethod.POST)
+    public Object preferenceLayout(@RequestBody UserRequestData requestData){
+        Users users = usersService.getUserByUsername(requestData.username);
+        if(users == null){
+            BaseData baseData = new BaseData("User status error.");
+            return new BaseReturnValue(2, baseData);
+        }
+
+        boolean result = usersService.updatePreferenceLayout(users, requestData.preferenceLayout);
+        if(!result){
+            BaseData data = new BaseData("Unexpected error.");
+            return new BaseReturnValue(1, data);
+        }
+        BaseData data = new BaseData(true,"");
+        return new BaseReturnValue(0, data);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/preference/show-mode", method = RequestMethod.POST)
+    public Object preferenceShowMode(@RequestBody UserRequestData requestData){
+        Users users = usersService.getUserByUsername(requestData.username);
+        if(users == null){
+            BaseData baseData = new BaseData("User status error.");
+            return new BaseReturnValue(2, baseData);
+        }
+
+        boolean result = usersService.updatePreferenceShowMode(users, requestData.preferenceShowMode);
+        if(!result){
+            BaseData data = new BaseData("Unexpected error.");
+            return new BaseReturnValue(1, data);
+        }
+        BaseData data = new BaseData(true,"");
+        return new BaseReturnValue(0, data);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/user", method = RequestMethod.PATCH)
+    public Object updateUserInformation(@RequestBody UserRequestData requestData){
+        Users users = usersService.getUserByUsername(requestData.username);
+        if(users == null){
+            BaseData baseData = new BaseData("User status error.");
+            return new BaseReturnValue(2, baseData);
+        }
+        Users updatedUser = usersService.updateUserInformation(users, requestData);
+        if(updatedUser == null){
+            BaseData baseData = new BaseData("Unexpected error.");
+            return new BaseReturnValue(1, baseData);
+        }
+        //TODO: preference team
+        UserData userData = new UserData(updatedUser, "user", -1);
+        return new BaseReturnValue(0, userData);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/user/password", method = RequestMethod.PATCH)
+    public Object updatePassword(@RequestBody UserRequestData requestData){
+        Users users = usersService.getUserByUsername(requestData.username);
+        if(users == null){
+            BaseData baseData = new BaseData("User status error.");
+            return new BaseReturnValue(2, baseData);
+        }
+        boolean verifyResult =  PasswordVerifier.verify(requestData.oldPassword,
+                new PasswordData(users.getPasswordDigest(), users.getPasswordSalt()));
+        if(!verifyResult){
+            BaseData baseData = new BaseData("Invalid oldPassword.");
+            return new BaseReturnValue(110, baseData);
+        }
+        boolean updateResult = usersService.updateUserPassword(users, requestData);
+        if(!updateResult){
+            BaseData baseData =new BaseData("Unexpected error.");
+            return new BaseReturnValue(1, baseData);
+        }
+        BaseData baseData = new BaseData(true, "");
+        return new BaseReturnValue(0, baseData);
     }
 }
 
