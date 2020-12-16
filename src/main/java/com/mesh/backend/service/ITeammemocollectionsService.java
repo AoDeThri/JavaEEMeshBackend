@@ -13,4 +13,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ITeammemocollectionsService extends IService<Teammemocollections> {
 
+    int getCollectionIdByTeamId(int teamId);
+
 }

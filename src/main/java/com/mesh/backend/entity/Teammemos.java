@@ -108,4 +108,10 @@ public class Teammemos extends Model<Teammemos> {
                 ", CollectionId=" + CollectionId +
                 "}";
     }
+
+    public Teammemos(){
+        this.CreatedTime = LocalDateTime.now();
+        this.UpdatedTime = LocalDateTime.now();
+    }
+
 }
