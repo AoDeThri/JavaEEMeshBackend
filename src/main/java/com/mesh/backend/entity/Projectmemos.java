@@ -108,4 +108,10 @@ public class Projectmemos extends Model<Projectmemos> {
                 ", UpdatedTime=" + UpdatedTime +
                 "}";
     }
+
+    public Projectmemos(){
+        this.CreatedTime = LocalDateTime.now();
+        this.UpdatedTime = LocalDateTime.now();
+    }
+
 }
