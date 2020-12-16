@@ -17,4 +17,10 @@ public interface IUsersService extends IService<Users> {
     Users getUserByUsername(String username);
 
     Users saveNewUser(UserData userData);
+
+    boolean updatePreferenceColor(Users user, String color);
+
+    boolean updatePreferenceShowMode(Users user, String showMode);
+
+    boolean updatePreferenceLayout(Users user, String layout);
 }

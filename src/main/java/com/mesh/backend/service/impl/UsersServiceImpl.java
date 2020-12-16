@@ -39,4 +39,22 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
         boolean result = save(user);
         return result? user : null;
     }
+
+    @Override
+    public boolean updatePreferenceColor(Users user, String color) {
+        user.setColorPreference(color);
+        return updateById(user);
+    }
+
+    @Override
+    public boolean updatePreferenceShowMode(Users user, String showMode) {
+        user.setRevealedPreference(showMode);
+        return updateById(user);
+    }
+
+    @Override
+    public boolean updatePreferenceLayout(Users user, String layout) {
+        user.setLayoutPreference(layout);
+        return updateById(user);
+    }
 }
