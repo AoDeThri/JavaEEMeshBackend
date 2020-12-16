@@ -1,6 +1,7 @@
 package com.mesh.backend.service;
 
 import com.mesh.backend.datas.UserData;
+import com.mesh.backend.datas.UserRequestData;
 import com.mesh.backend.entity.Users;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -23,4 +24,8 @@ public interface IUsersService extends IService<Users> {
     boolean updatePreferenceShowMode(Users user, String showMode);
 
     boolean updatePreferenceLayout(Users user, String layout);
+
+    Users updateUserInformation(Users user, UserRequestData requestData);
+
+    boolean updateUserPassword(Users user, UserRequestData requestData);
 }

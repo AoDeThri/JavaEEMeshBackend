@@ -104,7 +104,7 @@ public class UsersController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/preferene/show-mode", method = RequestMethod.POST)
+    @RequestMapping(value = "/preference/show-mode", method = RequestMethod.POST)
     public Object preferenceShowMode(@RequestBody UserRequestData requestData){
         Users users = usersService.getUserByUsername(requestData.username);
         if(users == null){
@@ -119,6 +119,47 @@ public class UsersController {
         }
         BaseData data = new BaseData(true,"");
         return new BaseReturnValue(0, data);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/user", method = RequestMethod.PATCH)
+    public Object updateUserInformation(@RequestBody UserRequestData requestData){
+        Users users = usersService.getUserByUsername(requestData.username);
+        if(users == null){
+            BaseData baseData = new BaseData("User status error.");
+            return new BaseReturnValue(2, baseData);
+        }
+        Users updatedUser = usersService.updateUserInformation(users, requestData);
+        if(updatedUser == null){
+            BaseData baseData = new BaseData("Unexpected error.");
+            return new BaseReturnValue(1, baseData);
+        }
+        //TODO: preference team
+        UserData userData = new UserData(updatedUser, "user", -1);
+        return new BaseReturnValue(0, userData);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/user/password", method = RequestMethod.PATCH)
+    public Object updatePassword(@RequestBody UserRequestData requestData){
+        Users users = usersService.getUserByUsername(requestData.username);
+        if(users == null){
+            BaseData baseData = new BaseData("User status error.");
+            return new BaseReturnValue(2, baseData);
+        }
+        boolean verifyResult =  PasswordVerifier.verify(requestData.oldPassword,
+                new PasswordData(users.getPasswordDigest(), users.getPasswordSalt()));
+        if(!verifyResult){
+            BaseData baseData = new BaseData("Invalid oldPassword.");
+            return new BaseReturnValue(110, baseData);
+        }
+        boolean updateResult = usersService.updateUserPassword(users, requestData);
+        if(!updateResult){
+            BaseData baseData =new BaseData("Unexpected error.");
+            return new BaseReturnValue(1, baseData);
+        }
+        BaseData baseData = new BaseData(true, "");
+        return new BaseReturnValue(0, baseData);
     }
 }
 
