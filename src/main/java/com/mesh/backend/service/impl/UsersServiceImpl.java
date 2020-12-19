@@ -98,4 +98,5 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
         user.setPasswordSalt(passwordData.passwordSalt);
         return updateById(user);
     }
+
 }

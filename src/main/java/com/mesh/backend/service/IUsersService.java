@@ -28,4 +28,5 @@ public interface IUsersService extends IService<Users> {
     Users updateUserInformation(Users user, UserRequestData requestData);
 
     boolean updateUserPassword(Users user, UserRequestData requestData);
+
 }
