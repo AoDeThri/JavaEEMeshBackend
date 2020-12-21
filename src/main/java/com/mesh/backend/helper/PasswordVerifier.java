@@ -2,16 +2,23 @@ package com.mesh.backend.helper;
 
 import com.mesh.backend.datas.PasswordData;
 
+import java.time.LocalDateTime;
+import java.util.Base64;
+
 public class PasswordVerifier {
 
-    //TODO: verify password
     public static boolean verify(String password, PasswordData passwordData){
-        return password.equals(passwordData.passwordDigest);
+        byte[] data = (password + passwordData.passwordSalt).getBytes();
+        String passwordDigest = Base64.getEncoder().encodeToString(data);
+        return passwordDigest.equals(passwordData.passwordDigest);
     }
 
-    //TODO: encryption
     public static PasswordData encryption(String password){
-        return new PasswordData(password, password);
+        byte[] salt = LocalDateTime.now().toString().getBytes();
+        String passwordSalt = Base64.getEncoder().encodeToString(salt);
+        String rawData = password + passwordSalt;
+        byte[] data = rawData.getBytes();
+        String passwordDigest = Base64.getEncoder().encodeToString(data);
+        return new PasswordData(passwordDigest, passwordSalt);
     }
-
 }
