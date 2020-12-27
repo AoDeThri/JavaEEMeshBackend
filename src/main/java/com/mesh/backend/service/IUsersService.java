@@ -5,6 +5,8 @@ import com.mesh.backend.datas.UserRequestData;
 import com.mesh.backend.entity.Users;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.ArrayList;
+
 /**
  * <p>
  *  服务类
@@ -28,5 +30,7 @@ public interface IUsersService extends IService<Users> {
     Users updateUserInformation(Users user, UserRequestData requestData);
 
     boolean updateUserPassword(Users user, UserRequestData requestData);
+
+    ArrayList<Users> getUserListByKeyword(String keyword);
 
 }

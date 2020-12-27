@@ -5,14 +5,15 @@ import com.mesh.backend.datas.*;
 import com.mesh.backend.entity.Users;
 import com.mesh.backend.helper.PasswordVerifier;
 import com.mesh.backend.service.impl.CooperationsServiceImpl;
+import com.mesh.backend.service.impl.TasksServiceImpl;
+import com.mesh.backend.service.impl.TeamsServiceImpl;
 import com.mesh.backend.service.impl.UsersServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.ArrayList;
 
 /**
  * <p>
@@ -31,6 +32,9 @@ public class UsersController {
 
     @Autowired
     private CooperationsServiceImpl cooperationsService;
+
+    @Autowired
+    private TeamsServiceImpl teamsService;
 
     @ResponseBody
     @RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -64,10 +68,10 @@ public class UsersController {
             BaseData data = new BaseData("Invalid username or password.");
             return new BaseReturnValue(102, data);
         }
-
         //TODO: confirm and keep login status
+        ArrayList<TeamData> teamData = teamsService.getUserTeams(user.getId());
         UserData data = new UserData(user, "user",
-                cooperationsService.getPreferenceTeam(user.getId()));
+                cooperationsService.getPreferenceTeam(user.getId()), teamData);
         return new BaseReturnValue(0, data);
     }
 
@@ -164,6 +168,20 @@ public class UsersController {
         }
         BaseData baseData = new BaseData(true, "");
         return new BaseReturnValue(0, baseData);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    public Object queryUser(@RequestParam String username, String keyword){
+        Users users = usersService.getUserByUsername(username);
+        if(users == null){
+            BaseData baseData = new BaseData("User status error.");
+            return new BaseReturnValue(2, baseData);
+        }
+
+        ArrayList<Users> usersArrayList = usersService.getUserListByKeyword(keyword);
+        BaseUserQueryData baseUserQueryData = new BaseUserQueryData(usersArrayList);
+        return new BaseReturnValue(0, baseUserQueryData);
     }
 }
 

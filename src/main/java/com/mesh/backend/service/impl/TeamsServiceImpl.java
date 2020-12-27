@@ -1,5 +1,7 @@
 package com.mesh.backend.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.mesh.backend.datas.TeamData;
 import com.mesh.backend.datas.TeamRequestData;
 import com.mesh.backend.entity.Cooperations;
 import com.mesh.backend.entity.Teammemocollections;
@@ -81,5 +83,18 @@ public class TeamsServiceImpl extends ServiceImpl<TeamsMapper, Teams> implements
     @Override
     public boolean checkTeamAdmin(Teams teams, int userId) {
         return teams.getAdminId().equals(userId);
+    }
+
+    @Override
+    public ArrayList<TeamData> getUserTeams(int userId) {
+        QueryWrapper<Teams> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(Teams::getAdminId, userId);
+        ArrayList<Teams> teams = new ArrayList<>(list(queryWrapper));
+        ArrayList<TeamData> teamData = new ArrayList<>();
+        for(Teams t: teams){
+            String adminName = usersService.getById(t.getAdminId()).getEmail();
+            teamData.add(new TeamData(t, adminName));
+        }
+        return teamData;
     }
 }

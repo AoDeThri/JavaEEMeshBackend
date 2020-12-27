@@ -1,10 +1,12 @@
 package com.mesh.backend.service;
 
+import com.mesh.backend.datas.TeamData;
 import com.mesh.backend.datas.TeamRequestData;
 import com.mesh.backend.entity.Teams;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mesh.backend.entity.Users;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,5 +26,7 @@ public interface ITeamsService extends IService<Teams> {
     boolean updateTeam(Teams team, String teamName);
 
     boolean checkTeamAdmin(Teams teams, int userId);
+
+    ArrayList<TeamData> getUserTeams(int userId);
 
 }

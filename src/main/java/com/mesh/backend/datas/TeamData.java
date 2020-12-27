@@ -19,6 +19,13 @@ public class TeamData{
     public ArrayList<ProjectInfo> teamProjects;
 
 
+    public TeamData(Teams teams, String adminName){
+        this.teamId = teams.getId();
+        this.createTime = teams.getCreatedTime();
+        this.teamName = teams.getName();
+        this.adminName = adminName;
+    }
+
     public TeamData(Teams teams, List<Users> users, String adminName){
         this.teamId = teams.getId();
         this.createTime = teams.getCreatedTime();

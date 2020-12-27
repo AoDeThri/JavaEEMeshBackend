@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 /**
  * <p>
@@ -99,4 +100,12 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
         return updateById(user);
     }
 
+    @Override
+    public ArrayList<Users> getUserListByKeyword(String keyword) {
+        QueryWrapper<Users> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("Email", keyword)
+                .or().like("Nickname", keyword)
+                .or().like("Description", keyword);
+        return new ArrayList<>(list(queryWrapper));
+    }
 }
