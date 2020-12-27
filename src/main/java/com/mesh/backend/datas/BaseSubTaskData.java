@@ -8,10 +8,10 @@ import com.mesh.backend.entity.Subtasks;
  * @author xuedixuedi
  */
 public class BaseSubTaskData extends BaseData {
-    public SubTaskData tasks;
+    public SubTaskData subtask;
 
-    BaseSubTaskData(Subtasks subtasks, String founder, String principal) {
+    public BaseSubTaskData(Subtasks subtasks, String founder, String principal) {
         super(true, "");
-        this.tasks = new SubTaskData(subtasks, founder, principal);
+        this.subtask = new SubTaskData(subtasks, founder, principal);
     }
 }

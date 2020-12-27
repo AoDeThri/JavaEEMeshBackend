@@ -2,6 +2,7 @@ package com.mesh.backend.datas;
 
 import com.mesh.backend.entity.Tasks;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,21 +11,28 @@ import java.util.List;
  * @author xuedixuedi
  */
 public class BaseTaskData extends BaseData {
-    public TaskData tasks;
+    public ArrayList<TaskData> tasks;
+    public TaskData task;
 
 
     /**
      * 任务:update/create/query
      *
-     * @param tasks
+     * @param task
      * @param founder
      * @param principal
      * @param subTasks
      */
-    BaseTaskData(Tasks tasks, String founder, String principal, List<SubTaskData> subTasks) {
+    public BaseTaskData(Tasks task, String founder, String principal, List<SubTaskData> subTasks) {
         super(true, "");
-        this.tasks = new TaskData(tasks, founder, principal, subTasks);
+        this.task = new TaskData(task, founder, principal, subTasks);
+        this.tasks = null;
     }
 
+    public BaseTaskData(ArrayList<TaskData> tasks){
+        super(true, "");
+        this.tasks = tasks;
+        this.task = null;
+    }
 
 }

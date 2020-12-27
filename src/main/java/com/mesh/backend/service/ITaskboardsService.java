@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ITaskboardsService extends IService<Taskboards> {
 
+    int getTaskBoardIdByProjectId(int projectId);
 }

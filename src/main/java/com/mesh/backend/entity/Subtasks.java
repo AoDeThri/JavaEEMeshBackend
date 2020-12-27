@@ -93,4 +93,11 @@ public class Subtasks extends Model<Subtasks> {
         ", UpdatedTime=" + UpdatedTime +
         "}";
     }
+
+    public Subtasks(){
+        this.Description = "";
+        this.Finished = false;
+        this.CreatedTime = LocalDateTime.now();
+        this.UpdatedTime = LocalDateTime.now();
+    }
 }

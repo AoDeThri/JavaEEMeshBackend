@@ -21,7 +21,7 @@ public class SubTaskData {
     /**
      * 基础构造函数
      */
-    SubTaskData(int taskId, String taskName, boolean isFinished, LocalDateTime createTime, String description, String founder, String principal) {
+    public SubTaskData(int taskId, String taskName, boolean isFinished, LocalDateTime createTime, String description, String founder, String principal) {
         this.taskId = taskId;
         this.taskName = taskName;
         this.isFinished = isFinished;
@@ -38,7 +38,7 @@ public class SubTaskData {
      * @param founder   创建者
      * @param principal 负责人
      */
-    SubTaskData(Subtasks subtasks, String founder, String principal) {
+    public SubTaskData(Subtasks subtasks, String founder, String principal) {
         this.taskId = subtasks.getTaskId();
         this.taskName = subtasks.getTitle();
         this.isFinished = subtasks.getFinished();

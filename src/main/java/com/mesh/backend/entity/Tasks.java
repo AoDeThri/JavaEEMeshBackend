@@ -151,4 +151,12 @@ public class Tasks extends Model<Tasks> {
         ", LeaderId=" + LeaderId +
         "}";
     }
+
+    public Tasks(){
+        this.Description = "";
+        this.CreatedTime = LocalDateTime.now();
+        this.UpdatedTime = LocalDateTime.now();
+        this.Finished = false;
+        this.StartTime = LocalDateTime.now();
+    }
 }

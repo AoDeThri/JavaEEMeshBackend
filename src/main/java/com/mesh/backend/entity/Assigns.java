@@ -82,4 +82,9 @@ public class Assigns extends Model<Assigns> {
         ", UpdatedTime=" + UpdatedTime +
         "}";
     }
+
+    public Assigns(){
+        this.CreatedTime = LocalDateTime.now();
+        this.UpdatedTime = LocalDateTime.now();
+    }
 }
