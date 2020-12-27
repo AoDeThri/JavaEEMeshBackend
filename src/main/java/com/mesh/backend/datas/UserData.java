@@ -40,10 +40,6 @@ public class UserData extends BaseData{
     }
 
     public UserData(Users users){
-        super(true, "");
-        this.preference = new Preference(users.getColorPreference(),
-                users.getRevealedPreference(), users.getLayoutPreference(),
-                -1);
         this.username = users.getEmail();
         this.nickname = users.getNickname();
         this.gender = users.getGender();
@@ -53,7 +49,6 @@ public class UserData extends BaseData{
         this.birthday = users.getBirthday();
         this.avatar = users.getAvatar();
         this.role = "user";
-        this.teams = new ArrayList<>();
     }
 
     public UserData(Users users, String role, int preferenceTeam, ArrayList<TeamData> teams){

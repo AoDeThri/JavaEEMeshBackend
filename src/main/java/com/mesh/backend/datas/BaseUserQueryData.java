@@ -14,4 +14,8 @@ public class BaseUserQueryData extends BaseData {
             this.users.add(new UserData(user));
         }
     }
+
+    public BaseUserQueryData(boolean isUserData, ArrayList<UserData> userData){
+        this.users = isUserData? userData : null;
+    }
 }
