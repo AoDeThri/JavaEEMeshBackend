@@ -5,6 +5,7 @@ import com.mesh.backend.datas.BaseReturnValue;
 import com.mesh.backend.datas.BaseStatisticsData;
 import com.mesh.backend.datas.BaseUserQueryData;
 import com.mesh.backend.entity.Users;
+import com.mesh.backend.helper.SessionVerifier;
 import com.mesh.backend.service.impl.AdminsServiceImpl;
 import com.mesh.backend.service.impl.UsersServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +28,14 @@ public class StatisticsController {
     @Autowired
     private AdminsServiceImpl adminsService;
 
+    @Autowired
+    private SessionVerifier sessionVerifier;
+
     @ResponseBody
     @RequestMapping(value = "search-user", method = RequestMethod.GET)
     public Object queryUserInfo(@RequestParam String username, String keyword){
         Users users = usersService.getUserByUsername(username);
-        if(users == null){
+        if(!sessionVerifier.verify(users)){
             BaseData baseData = new BaseData("User status error.");
             return new BaseReturnValue(2, baseData);
         }

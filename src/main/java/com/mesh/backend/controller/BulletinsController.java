@@ -5,6 +5,7 @@ import com.mesh.backend.datas.*;
 import com.mesh.backend.entity.Bulletins;
 import com.mesh.backend.entity.Projects;
 import com.mesh.backend.entity.Users;
+import com.mesh.backend.helper.SessionVerifier;
 import com.mesh.backend.service.impl.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -37,11 +38,14 @@ public class BulletinsController {
     @Autowired
     private DevelopsServiceImpl developsService;
 
+    @Autowired
+    private SessionVerifier sessionVerifier;
+
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST)
     public Object createBulletin(@RequestBody BulletinRequestData requestData){
         Users users = usersService.getUserByUsername(requestData.username);
-        if(users == null){
+        if(!sessionVerifier.verify(users)){
             BaseData baseData = new BaseData("User status error.");
             return new BaseReturnValue(2, baseData);
         }
@@ -69,7 +73,7 @@ public class BulletinsController {
     public Object queryBulletin(@RequestParam String username, int projectId){
 
         Users users = usersService.getUserByUsername(username);
-        if(users == null){
+        if(!sessionVerifier.verify(users)){
             BaseData baseData = new BaseData("User status error.");
             return new BaseReturnValue(2, baseData);
         }
@@ -99,7 +103,7 @@ public class BulletinsController {
     public Object deleteBulletin(@RequestParam String username, int projectId, int bulletinId){
 
         Users users = usersService.getUserByUsername(username);
-        if(users == null){
+        if(!sessionVerifier.verify(users)){
             BaseData baseData = new BaseData("User status error.");
             return new BaseReturnValue(2, baseData);
         }
@@ -127,7 +131,7 @@ public class BulletinsController {
     @RequestMapping(method = RequestMethod.PATCH)
     public Object updateBulletin(@RequestBody BulletinRequestData requestData){
         Users users = usersService.getUserByUsername(requestData.username);
-        if(users == null){
+        if(!sessionVerifier.verify(users)){
             BaseData baseData = new BaseData("User status error.");
             return new BaseReturnValue(2, baseData);
         }

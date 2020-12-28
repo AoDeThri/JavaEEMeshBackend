@@ -8,6 +8,7 @@ import com.mesh.backend.datas.ProjectRequestData;
 import com.mesh.backend.entity.Projects;
 import com.mesh.backend.entity.Teams;
 import com.mesh.backend.entity.Users;
+import com.mesh.backend.helper.SessionVerifier;
 import com.mesh.backend.service.impl.DevelopsServiceImpl;
 import com.mesh.backend.service.impl.ProjectsServiceImpl;
 import com.mesh.backend.service.impl.TeamsServiceImpl;
@@ -43,12 +44,15 @@ public class ProjectsController {
     @Autowired
     private DevelopsServiceImpl developsService;
 
+    @Autowired
+    private SessionVerifier sessionVerifier;
+
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST)
     public Object createProject(@RequestBody ProjectRequestData requestData){
 
         Users users = usersService.getUserByUsername(requestData.username);
-        if(users == null){
+        if(!sessionVerifier.verify(users)){
             BaseData baseData = new BaseData("User status error.");
             return new BaseReturnValue(2, baseData);
         }
@@ -87,7 +91,7 @@ public class ProjectsController {
     public Object queryProject(@RequestParam String username, int projectId){
 
         Users users = usersService.getUserByUsername(username);
-        if(users == null){
+        if(!sessionVerifier.verify(users)){
             BaseData baseData = new BaseData("User status error.");
             return new BaseReturnValue(2, baseData);
         }
@@ -114,7 +118,7 @@ public class ProjectsController {
     public Object deleteProject(@RequestParam String username, int teamId, int projectId){
 
         Users users = usersService.getUserByUsername(username);
-        if(users == null){
+        if(!sessionVerifier.verify(users)){
             BaseData baseData = new BaseData("User status error.");
             return new BaseReturnValue(2, baseData);
         }
@@ -139,7 +143,7 @@ public class ProjectsController {
     public Object updateProject(@RequestBody ProjectRequestData requestData){
 
         Users users = usersService.getUserByUsername(requestData.username);
-        if(users == null){
+        if(!sessionVerifier.verify(users)){
             BaseData baseData = new BaseData("User status error.");
             return new BaseReturnValue(2, baseData);
         }
@@ -170,7 +174,7 @@ public class ProjectsController {
     public Object inviteNewProjectMember(@RequestBody ProjectRequestData requestData){
 
         Users users = usersService.getUserByUsername(requestData.username);
-        if(users == null){
+        if(!sessionVerifier.verify(users)){
             BaseData baseData = new BaseData("User status error.");
             return new BaseReturnValue(2, baseData);
         }

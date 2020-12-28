@@ -8,6 +8,7 @@ import com.mesh.backend.datas.SubTaskRequestData;
 import com.mesh.backend.entity.Projects;
 import com.mesh.backend.entity.Subtasks;
 import com.mesh.backend.entity.Users;
+import com.mesh.backend.helper.SessionVerifier;
 import com.mesh.backend.service.impl.ProjectsServiceImpl;
 import com.mesh.backend.service.impl.SubtasksServiceImpl;
 import com.mesh.backend.service.impl.TasksServiceImpl;
@@ -41,11 +42,14 @@ public class SubtasksController {
     @Autowired
     private TasksServiceImpl tasksService;
 
+    @Autowired
+    private SessionVerifier sessionVerifier;
+
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST)
     public Object createSubtask(@RequestBody SubTaskRequestData requestData){
         Users users = usersService.getUserByUsername(requestData.username);
-        if(users == null){
+        if(!sessionVerifier.verify(users)){
             BaseData baseData = new BaseData("User status error.");
             return new BaseReturnValue(2, baseData);
         }
@@ -79,7 +83,7 @@ public class SubtasksController {
     @RequestMapping(method = RequestMethod.DELETE)
     public Object deleteSubtask(@RequestParam String username, int projectId, int taskId, String subTaskName){
         Users users = usersService.getUserByUsername(username);
-        if(users == null){
+        if(!sessionVerifier.verify(users)){
             BaseData baseData = new BaseData("User status error.");
             return new BaseReturnValue(2, baseData);
         }
@@ -108,7 +112,7 @@ public class SubtasksController {
     @RequestMapping(method = RequestMethod.PATCH)
     public Object updateSubtask(@RequestBody SubTaskRequestData requestData){
         Users users = usersService.getUserByUsername(requestData.username);
-        if(users == null){
+        if(!sessionVerifier.verify(users)){
             BaseData baseData = new BaseData("User status error.");
             return new BaseReturnValue(2, baseData);
         }

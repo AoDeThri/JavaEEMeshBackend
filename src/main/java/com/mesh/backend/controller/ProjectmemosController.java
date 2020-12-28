@@ -3,6 +3,7 @@ package com.mesh.backend.controller;
 
 import com.mesh.backend.datas.*;
 import com.mesh.backend.entity.*;
+import com.mesh.backend.helper.SessionVerifier;
 import com.mesh.backend.service.impl.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -34,16 +35,18 @@ public class ProjectmemosController {
     @Autowired
     private ProjectmemosServiceImpl projectmemosService;
 
+    @Autowired
+    private SessionVerifier sessionVerifier;
+
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST)
     public Object createTeamKB(@RequestBody KnowledgeRequestData requestData){
 
         Users users = usersService.getUserByUsername(requestData.username);
-        if(users == null){
+        if(!sessionVerifier.verify(users)){
             BaseData baseData = new BaseData("User status error.");
             return new BaseReturnValue(2, baseData);
         }
-
         Projects projects = projectService.getById(requestData.projectId);
         if(projects == null){
             BaseData baseData = new BaseData("Project does not exist.");
@@ -70,7 +73,7 @@ public class ProjectmemosController {
     public Object queryTeamKB(@RequestParam String username, int projectId){
 
         Users users = usersService.getUserByUsername(username);
-        if(users == null){
+        if(!sessionVerifier.verify(users)){
             BaseData baseData = new BaseData("User status error.");
             return new BaseReturnValue(2, baseData);
         }
@@ -100,7 +103,7 @@ public class ProjectmemosController {
     public Object deleteTeamKB(@RequestParam String username, int projectId, int knowledgeId){
 
         Users users = usersService.getUserByUsername(username);
-        if(users == null){
+        if(!sessionVerifier.verify(users)){
             BaseData baseData = new BaseData("User status error.");
             return new BaseReturnValue(2, baseData);
         }
@@ -135,7 +138,7 @@ public class ProjectmemosController {
     @RequestMapping(method = RequestMethod.PATCH)
     public Object updateTeamKB(@RequestBody KnowledgeRequestData requestData){
         Users users = usersService.getUserByUsername(requestData.username);
-        if(users == null){
+        if(!sessionVerifier.verify(users)){
             BaseData baseData = new BaseData("User status error.");
             return new BaseReturnValue(2, baseData);
         }

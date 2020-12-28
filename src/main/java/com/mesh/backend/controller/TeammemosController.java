@@ -5,6 +5,7 @@ import com.mesh.backend.datas.*;
 import com.mesh.backend.entity.Teammemos;
 import com.mesh.backend.entity.Teams;
 import com.mesh.backend.entity.Users;
+import com.mesh.backend.helper.SessionVerifier;
 import com.mesh.backend.service.impl.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -37,12 +38,15 @@ public class TeammemosController {
     @Autowired
     private TeammemosServiceImpl teammemosService;
 
+    @Autowired
+    private SessionVerifier sessionVerifier;
+
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST)
     public Object createTeamKB(@RequestBody KnowledgeRequestData requestData){
 
         Users users = usersService.getUserByUsername(requestData.username);
-        if(users == null){
+        if(!sessionVerifier.verify(users)){
             BaseData baseData = new BaseData("User status error.");
             return new BaseReturnValue(2, baseData);
         }
@@ -73,7 +77,7 @@ public class TeammemosController {
     public Object queryTeamKB(@RequestParam String username, int teamId){
 
         Users users = usersService.getUserByUsername(username);
-        if(users == null){
+        if(!sessionVerifier.verify(users)){
             BaseData baseData = new BaseData("User status error.");
             return new BaseReturnValue(2, baseData);
         }
@@ -103,7 +107,7 @@ public class TeammemosController {
     public Object deleteTeamKB(@RequestParam String username, int teamId, int knowledgeId){
 
         Users users = usersService.getUserByUsername(username);
-        if(users == null){
+        if(!sessionVerifier.verify(users)){
             BaseData baseData = new BaseData("User status error.");
             return new BaseReturnValue(2, baseData);
         }
@@ -138,7 +142,7 @@ public class TeammemosController {
     @RequestMapping(method = RequestMethod.PATCH)
     public Object updateTeamKB(@RequestBody KnowledgeRequestData requestData){
         Users users = usersService.getUserByUsername(requestData.username);
-        if(users == null){
+        if(!sessionVerifier.verify(users)){
             BaseData baseData = new BaseData("User status error.");
             return new BaseReturnValue(2, baseData);
         }

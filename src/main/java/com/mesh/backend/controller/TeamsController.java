@@ -2,10 +2,9 @@ package com.mesh.backend.controller;
 
 
 import com.mesh.backend.datas.*;
-import com.mesh.backend.entity.Cooperations;
 import com.mesh.backend.entity.Teams;
 import com.mesh.backend.entity.Users;
-import com.mesh.backend.service.ITeamsService;
+import com.mesh.backend.helper.SessionVerifier;
 import com.mesh.backend.service.impl.CooperationsServiceImpl;
 import com.mesh.backend.service.impl.ProjectsServiceImpl;
 import com.mesh.backend.service.impl.TeamsServiceImpl;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
 
-import javax.swing.text.StyledEditorKit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,15 +39,17 @@ public class TeamsController {
     private CooperationsServiceImpl cooperationsService;
 
     @Autowired
+    private SessionVerifier sessionVerifier;
+
+    @Autowired
     private ProjectsServiceImpl projectsService;
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST)
     public Object createTeam(@RequestBody TeamRequestData teamRequestData){
 
-        //TODO: authentication
         Users users = usersService.getUserByUsername(teamRequestData.username);
-        if(users == null){
+        if(!sessionVerifier.verify(users)){
             BaseData baseData = new BaseData("User status error.");
             return new BaseReturnValue(2, baseData);
         }
@@ -71,7 +71,7 @@ public class TeamsController {
     public Object queryTeam(@RequestParam String username, int teamId){
 
         Users users = usersService.getUserByUsername(username);
-        if(users == null){
+        if(!sessionVerifier.verify(users)){
             BaseData baseData = new BaseData("User status error.");
             return new BaseReturnValue(2, baseData);
         }
@@ -101,7 +101,7 @@ public class TeamsController {
     public Object updateTeam(@RequestBody TeamRequestData requestData){
 
         Users users = usersService.getUserByUsername(requestData.username);
-        if(users == null){
+        if(!sessionVerifier.verify(users)){
             BaseData baseData = new BaseData("User status error.");
             return new BaseReturnValue(2, baseData);
         }
@@ -135,7 +135,7 @@ public class TeamsController {
     public Object deleteTeam(@RequestParam String username, int teamId){
 
         Users users = usersService.getUserByUsername(username);
-        if(users == null){
+        if(!sessionVerifier.verify(users)){
             BaseData baseData = new BaseData("User status error.");
             return new BaseReturnValue(2, baseData);
         }
@@ -166,7 +166,7 @@ public class TeamsController {
     public Object quitTeam(@RequestParam String username, int teamId){
 
         Users users = usersService.getUserByUsername(username);
-        if(users == null){
+        if(!sessionVerifier.verify(users)){
             BaseData baseData = new BaseData("User status error.");
             return new BaseReturnValue(2, baseData);
         }
@@ -196,7 +196,7 @@ public class TeamsController {
     public Object inviteNewTeamMember(@RequestBody TeamRequestData requestData){
 
         Users users = usersService.getUserByUsername(requestData.username);
-        if(users == null){
+        if(!sessionVerifier.verify(users)){
             BaseData baseData = new BaseData("User status error.");
             return new BaseReturnValue(2, baseData);
         }
@@ -238,7 +238,7 @@ public class TeamsController {
         }
 
         Users users = usersService.getUserByUsername(username);
-        if(users == null){
+        if(!sessionVerifier.verify(users)){
             BaseData baseData = new BaseData("User status error.");
             return new BaseReturnValue(2, baseData);
         }

@@ -5,6 +5,7 @@ import com.mesh.backend.datas.*;
 import com.mesh.backend.entity.Projects;
 import com.mesh.backend.entity.Tasks;
 import com.mesh.backend.entity.Users;
+import com.mesh.backend.helper.SessionVerifier;
 import com.mesh.backend.service.impl.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -40,11 +41,14 @@ public class TasksController {
     @Autowired
     private DevelopsServiceImpl developsService;
 
+    @Autowired
+    private SessionVerifier sessionVerifier;
+
     @ResponseBody
     @RequestMapping(value = "/team", method = RequestMethod.GET)
     public Object queryTeamTasks(@RequestParam String username, int teamId){
         Users users = usersService.getUserByUsername(username);
-        if(users == null){
+        if(!sessionVerifier.verify(users)){
             BaseData baseData = new BaseData("User status error.");
             return new BaseReturnValue(2, baseData);
         }
@@ -63,7 +67,7 @@ public class TasksController {
     @RequestMapping(value = "/project", method = RequestMethod.GET)
     public Object queryProjectTasks(@RequestParam String username, int projectId){
         Users users = usersService.getUserByUsername(username);
-        if(users == null){
+        if(!sessionVerifier.verify(users)){
             BaseData baseData = new BaseData("User status error.");
             return new BaseReturnValue(2, baseData);
         }
@@ -87,7 +91,7 @@ public class TasksController {
     @RequestMapping(method = RequestMethod.POST)
     public Object createTask(@RequestBody TaskRequestData requestData){
         Users users = usersService.getUserByUsername(requestData.username);
-        if(users == null){
+        if(!sessionVerifier.verify(users)){
             BaseData baseData = new BaseData("User status error.");
             return new BaseReturnValue(2, baseData);
         }
@@ -120,7 +124,7 @@ public class TasksController {
     @RequestMapping(method = RequestMethod.DELETE)
     public Object deleteTask(@RequestParam String username,int projectId, int taskId){
         Users users = usersService.getUserByUsername(username);
-        if(users == null){
+        if(!sessionVerifier.verify(users)){
             BaseData baseData = new BaseData("User status error.");
             return new BaseReturnValue(2, baseData);
         }
@@ -147,7 +151,7 @@ public class TasksController {
     @RequestMapping(method = RequestMethod.PATCH)
     public Object updateTask(@RequestBody TaskRequestData requestData){
         Users users = usersService.getUserByUsername(requestData.username);
-        if(users == null){
+        if(!sessionVerifier.verify(users)){
             BaseData baseData = new BaseData("User status error.");
             return new BaseReturnValue(2, baseData);
         }
