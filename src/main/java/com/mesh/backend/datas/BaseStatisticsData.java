@@ -7,13 +7,13 @@ public class BaseStatisticsData extends BaseData{
     public int maleUser;
     public int femaleUser;
     public int unknownUser;
-    ArrayList<UserAge> userAge;
-    ArrayList<UserLocation> userLocation;
+    public ArrayList<UserAge> userAge;
+    public ArrayList<UserLocation> userLocation;
     public int currentOnlineUser;
     public double avgTeamUser;
     public double avgTeamProject;
     public int currentTotalUser;
-    ArrayList<HistoryTotalUser> historyTotalUser;
+    public ArrayList<HistoryTotalUser> historyTotalUser;
 
     public BaseStatisticsData(int currentTotalUser, ArrayList<Integer> users){
         super(true, "");
@@ -31,6 +31,7 @@ public class BaseStatisticsData extends BaseData{
         this.femaleUser = femaleUser;
         this.unknownUser = unknownUser;
         this.userAge = new ArrayList<>();
+        this.userLocation = new ArrayList<>();
         for(Map.Entry<Integer, Integer> entry : userAge.entrySet()){
             this.userAge.add(new UserAge(entry.getKey(), entry.getValue()));
         }

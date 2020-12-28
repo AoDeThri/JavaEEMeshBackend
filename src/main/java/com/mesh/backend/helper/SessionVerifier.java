@@ -32,4 +32,15 @@ public class SessionVerifier {
         return username.equals(user.getEmail());
     }
 
+    public int getOnlineUserCount(int maxId){
+        int count = 0;
+        for(int i = 1; i <= maxId; ++i){
+            MapSession mapSession = mapSessionRepository.findById(String.valueOf(i));
+            if(mapSession != null){
+                ++count;
+            }
+        }
+        return count;
+    }
+
 }

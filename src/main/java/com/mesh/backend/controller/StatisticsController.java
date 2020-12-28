@@ -48,6 +48,11 @@ public class StatisticsController {
     @ResponseBody
     @RequestMapping(value = "totaluser", method = RequestMethod.GET)
     public Object queryTotalUser(@RequestParam int timeInterval, int itemCount){
+        if(timeInterval <= 0){
+            BaseData baseData = new BaseData("Invalid timeInterval.");
+            return new BaseReturnValue(457, baseData);
+        }
+
         int currentTotalUser = adminsService.getCurrentTotalUser();
         ArrayList<Integer> historyTotalUser = adminsService.getHistoryTotalUser(timeInterval, itemCount);
         BaseStatisticsData baseStatisticsData = new BaseStatisticsData(currentTotalUser, historyTotalUser);

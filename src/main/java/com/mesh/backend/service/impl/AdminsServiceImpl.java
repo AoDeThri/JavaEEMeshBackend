@@ -5,14 +5,18 @@ import com.mesh.backend.datas.TeamData;
 import com.mesh.backend.datas.UserData;
 import com.mesh.backend.entity.Admins;
 import com.mesh.backend.entity.Users;
+import com.mesh.backend.helper.SessionVerifier;
 import com.mesh.backend.mapper.AdminsMapper;
 import com.mesh.backend.service.IAdminsService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,10 +42,24 @@ public class AdminsServiceImpl extends ServiceImpl<AdminsMapper, Admins> impleme
     @Autowired
     private CooperationsServiceImpl cooperationsService;
 
+    @Autowired
+    private SessionVerifier sessionVerifier;
+
     private int getGenderCount(int gender){
         QueryWrapper<Users> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda().eq(Users::getGender, gender);
         return usersService.count(queryWrapper);
+    }
+
+    private int getAge(LocalDateTime time){
+        LocalDate birthday = time.toLocalDate();
+        LocalDate now = LocalDate.now();
+        int age = now.getYear() - birthday.getYear();
+        if((now.getMonthValue() > birthday.getMonthValue()) ||
+                (now.getMonthValue() == birthday.getMonthValue() && now.getDayOfMonth() > birthday.getDayOfMonth())){
+            ++age;
+        }
+        return age;
     }
 
     @Override
@@ -59,8 +77,7 @@ public class AdminsServiceImpl extends ServiceImpl<AdminsMapper, Admins> impleme
 
     @Override
     public int getCurrentOnlineUser() {
-        //TODO: get current online user
-        return 0;
+        return sessionVerifier.getOnlineUserCount(usersService.count());
     }
 
     @Override
@@ -75,14 +92,24 @@ public class AdminsServiceImpl extends ServiceImpl<AdminsMapper, Admins> impleme
 
     @Override
     public Map<Integer, Integer> getUserAge() {
-        //TODO: get user age
-        return new HashMap<>();
+        List<Users> usersList = usersService.list();
+        HashMap<Integer, Integer> userAge = new HashMap<>();
+        for(Users user: usersList){
+            int age = getAge(user.getBirthday());
+            userAge.compute(age, (key, value)-> value == null ? 1: value +1);
+        }
+        return userAge;
     }
 
     @Override
     public Map<String, Integer> getUserLocation() {
-        //TODO: get user location
-        return new HashMap<>();
+        List<Users> usersList = usersService.list();
+        HashMap<String, Integer> userLocation = new HashMap<>();
+        for(Users user: usersList){
+            String address = user.getAddress();
+            userLocation.compute(address, (key, value)-> value == null ? 1: value + 1);
+        }
+        return userLocation;
     }
 
     @Override
@@ -107,7 +134,22 @@ public class AdminsServiceImpl extends ServiceImpl<AdminsMapper, Admins> impleme
 
     @Override
     public ArrayList<Integer> getHistoryTotalUser(int timeInterval, int itemCount) {
-        //TODO: get history total user
-        return new ArrayList<>();
+        ArrayList<Integer> historyTotalUser = new ArrayList<>();
+        QueryWrapper<Users> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("CreatedTime");
+        List<Users> userList = usersService.list(queryWrapper);
+        for(int i = 0; i < itemCount; ++i){
+            int count = 0;
+            LocalDate startTime = LocalDate.now().minusDays((long) (i + 1) * timeInterval);
+            LocalDate endTime = LocalDate.now().minusDays((long) i * timeInterval);
+            for(Users user: userList){
+                LocalDate date = user.getCreatedTime().toLocalDate();
+                if(date.isAfter(startTime) && date.isBefore(endTime) || date.isEqual(endTime)){
+                    ++count;
+                }
+            }
+            historyTotalUser.add(count);
+        }
+        return historyTotalUser;
     }
 }
