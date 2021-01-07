@@ -16,6 +16,7 @@ public class BaseUserQueryData extends BaseData {
     }
 
     public BaseUserQueryData(boolean isUserData, ArrayList<UserData> userData){
+        super(true, "");
         this.users = isUserData? userData : null;
     }
 }
