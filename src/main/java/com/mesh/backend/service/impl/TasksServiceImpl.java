@@ -58,7 +58,11 @@ public class TasksServiceImpl extends ServiceImpl<TasksMapper, Tasks> implements
         Tasks task = new Tasks();
         task.setBoardId(boardId);
         task.setDescription(requestData.description);
-        task.setPriority(requestData.priority);
+        int priority = 0;
+        if(requestData.priority != null) {
+            priority = Integer.parseInt(requestData.priority);
+        }
+        task.setPriority(priority);
         task.setEndTime(LocalDate.parse(requestData.deadline).atStartOfDay());
         task.setName(requestData.taskName);
         task.setLeaderId(principalId);
@@ -72,7 +76,11 @@ public class TasksServiceImpl extends ServiceImpl<TasksMapper, Tasks> implements
             return null;
         }
         task.setName(requestData.taskName);
-        task.setPriority(requestData.priority);
+        int priority = task.getPriority();
+        if(requestData.priority != null) {
+            priority = Integer.parseInt(requestData.priority);
+        }
+        task.setPriority(priority);
         task.setFinished(requestData.isFinished);
         task.setEndTime(LocalDate.parse(requestData.deadline).atStartOfDay());
         task.setDescription(requestData.description);

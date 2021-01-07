@@ -13,7 +13,7 @@ public class TaskRequestData {
     public int teamId;
     public int taskId;
     public String taskName;
-    public int priority;
+    public String priority;
     public String deadline;
     public String description;
     public String principal;
