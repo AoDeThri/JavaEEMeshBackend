@@ -3,6 +3,7 @@ package com.mesh.backend.controller;
 
 import com.mesh.backend.datas.*;
 import com.mesh.backend.entity.Users;
+import com.mesh.backend.helper.AdminCheckHelper;
 import com.mesh.backend.helper.PasswordVerifier;
 import com.mesh.backend.helper.SessionVerifier;
 import com.mesh.backend.service.impl.CooperationsServiceImpl;
@@ -64,6 +65,13 @@ public class UsersController {
     @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Object login(HttpServletRequest request, @RequestBody UserData userData){
+        if(AdminCheckHelper.checkIfAdmin(userData)){
+            UserData data = new UserData();
+            data.username = "root";
+            data.nickname = "root";
+            data.role = "admin";
+            return new BaseReturnValue(0, data);
+        }
         Users user = usersService.getUserByUsername(userData.username);
         if(user == null){
             BaseData data = new BaseData("Invalid username or password.");

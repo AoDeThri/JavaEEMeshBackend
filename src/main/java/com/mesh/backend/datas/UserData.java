@@ -2,6 +2,7 @@ package com.mesh.backend.datas;
 
 import com.mesh.backend.entity.Users;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -13,8 +14,7 @@ public class UserData extends BaseData{
     public int status;
     public String address;
     public String description;
-    //TODO: modify to yyyy-MM-dd
-    public LocalDateTime birthday;
+    public String birthday;
     public String avatar;
     public String role;
     public String token;
@@ -33,7 +33,7 @@ public class UserData extends BaseData{
         this.status = users.getStatus();
         this.address = users.getAddress();
         this.description = users.getDescription();
-        this.birthday = users.getBirthday();
+        this.birthday = users.getBirthday().toLocalDate().toString();
         this.avatar = users.getAvatar();
         this.role = role;
         this.teams = new ArrayList<>();
@@ -46,7 +46,7 @@ public class UserData extends BaseData{
         this.status = users.getStatus();
         this.address = users.getAddress();
         this.description = users.getDescription();
-        this.birthday = users.getBirthday();
+        this.birthday = users.getBirthday().toLocalDate().toString();
         this.avatar = users.getAvatar();
         this.role = "user";
     }
@@ -62,7 +62,7 @@ public class UserData extends BaseData{
         this.status = users.getStatus();
         this.address = users.getAddress();
         this.description = users.getDescription();
-        this.birthday = users.getBirthday();
+        this.birthday = users.getBirthday().toLocalDate().toString();
         this.avatar = users.getAvatar();
         this.role = role;
         this.teams = teams;
