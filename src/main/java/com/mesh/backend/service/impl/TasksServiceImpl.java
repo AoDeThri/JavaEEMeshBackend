@@ -73,6 +73,7 @@ public class TasksServiceImpl extends ServiceImpl<TasksMapper, Tasks> implements
         }
         task.setName(requestData.taskName);
         task.setPriority(requestData.priority);
+        task.setFinished(requestData.isFinished);
         task.setEndTime(LocalDate.parse(requestData.deadline).atStartOfDay());
         task.setDescription(requestData.description);
         task.setUpdatedTime(LocalDateTime.now());
