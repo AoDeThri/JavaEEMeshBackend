@@ -15,7 +15,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +59,7 @@ public class TasksServiceImpl extends ServiceImpl<TasksMapper, Tasks> implements
         task.setBoardId(boardId);
         task.setDescription(requestData.description);
         task.setPriority(requestData.priority);
-        task.setEndTime(requestData.deadline);
+        task.setEndTime(LocalDate.parse(requestData.deadline).atStartOfDay());
         task.setName(requestData.taskName);
         task.setLeaderId(principalId);
         return save(task) ? task : null;
@@ -69,7 +73,7 @@ public class TasksServiceImpl extends ServiceImpl<TasksMapper, Tasks> implements
         }
         task.setName(requestData.taskName);
         task.setPriority(requestData.priority);
-        task.setEndTime(requestData.deadline);
+        task.setEndTime(LocalDate.parse(requestData.deadline).atStartOfDay());
         task.setDescription(requestData.description);
         task.setUpdatedTime(LocalDateTime.now());
         task.setLeaderId(principalId);

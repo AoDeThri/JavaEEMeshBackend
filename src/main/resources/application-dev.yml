@@ -3,10 +3,7 @@ server:
 
 spring:
   datasource:
-    username:
-    password:
-    url:
+    username: nopegeo
+    password: 1234
+    url: jdbc:mysql://localhost:3306/test
     schema: classpath:db/script.sql
-
-mybatis:
-  type-aliases-package: com.mesh.backend.models

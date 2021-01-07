@@ -14,7 +14,7 @@ public class TaskRequestData {
     public int taskId;
     public String taskName;
     public int priority;
-    public LocalDateTime deadline;
+    public String deadline;
     public String description;
     public String principal;
     public boolean isFinished;
