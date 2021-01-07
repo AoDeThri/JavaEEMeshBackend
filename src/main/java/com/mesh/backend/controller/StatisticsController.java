@@ -34,12 +34,6 @@ public class StatisticsController {
     @ResponseBody
     @RequestMapping(value = "search-user", method = RequestMethod.GET)
     public Object queryUserInfo(@RequestParam String username, String keyword){
-        Users users = usersService.getUserByUsername(username);
-        if(!sessionVerifier.verify(users)){
-            BaseData baseData = new BaseData("User status error.");
-            return new BaseReturnValue(2, baseData);
-        }
-
         BaseUserQueryData baseUserQueryData = new BaseUserQueryData(true,
                 adminsService.getUserInformationByKeyword(keyword));
         return new BaseReturnValue(0, baseUserQueryData);
