@@ -3,6 +3,7 @@ package com.mesh.backend.datas;
 import com.mesh.backend.entity.Projectmemos;
 import com.mesh.backend.entity.Teammemos;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -15,14 +16,14 @@ public class KnowledgeData {
     //链接地址
     public String hyperlink;
     public String uploaderName;
-    public LocalDateTime createTime;
+    public LocalDate createTime;
 
     public KnowledgeData(int knowledgeId, String knowledgeName, String hyperlink, String uploaderName, LocalDateTime createTime) {
         this.knowledgeId = knowledgeId;
         this.knowledgeName = knowledgeName;
         this.hyperlink = hyperlink;
         this.uploaderName = uploaderName;
-        this.createTime = createTime;
+        this.createTime = createTime.toLocalDate();
     }
 
     /**
@@ -36,7 +37,7 @@ public class KnowledgeData {
         this.knowledgeName = projectmemos.getTitle();
         this.hyperlink = projectmemos.getText();
         this.uploaderName = uploaderName;
-        this.createTime = projectmemos.getCreatedTime();
+        this.createTime = projectmemos.getCreatedTime().toLocalDate();
     }
 
     /**
@@ -50,6 +51,6 @@ public class KnowledgeData {
         this.knowledgeName = teammemos.getTitle();
         this.hyperlink = teammemos.getText();
         this.uploaderName = uploaderName;
-        this.createTime = teammemos.getCreatedTime();
+        this.createTime = teammemos.getCreatedTime().toLocalDate();
     }
 }

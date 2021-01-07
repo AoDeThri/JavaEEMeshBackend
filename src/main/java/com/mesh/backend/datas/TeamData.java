@@ -4,6 +4,7 @@ import com.mesh.backend.entity.Projects;
 import com.mesh.backend.entity.Teams;
 import com.mesh.backend.entity.Users;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,7 +13,7 @@ import java.util.Map;
 
 public class TeamData{
     public int teamId;
-    public LocalDateTime createTime;
+    public LocalDate createTime;
     public String teamName;
     public String adminName;
     public ArrayList<MemberInfo> members;
@@ -21,14 +22,14 @@ public class TeamData{
 
     public TeamData(Teams teams, String adminName){
         this.teamId = teams.getId();
-        this.createTime = teams.getCreatedTime();
+        this.createTime = teams.getCreatedTime().toLocalDate();
         this.teamName = teams.getName();
         this.adminName = adminName;
     }
 
     public TeamData(Teams teams, List<Users> users, String adminName){
         this.teamId = teams.getId();
-        this.createTime = teams.getCreatedTime();
+        this.createTime = teams.getCreatedTime().toLocalDate();
         this.teamName = teams.getName();
         this.adminName = adminName;
         this.members = new ArrayList<>();
@@ -40,7 +41,7 @@ public class TeamData{
 
     public TeamData(Teams teams, List<Users> users, String adminName, List<ProjectData> projectDataList){
         this.teamId = teams.getId();
-        this.createTime = teams.getCreatedTime();
+        this.createTime = teams.getCreatedTime().toLocalDate();
         this.teamName = teams.getName();
         this.adminName = adminName;
         this.members = new ArrayList<>();

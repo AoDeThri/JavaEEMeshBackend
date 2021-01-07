@@ -1,5 +1,6 @@
 package com.mesh.backend.datas;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -13,7 +14,7 @@ public class NotificationData {
     public int notificationId;
     public String title;
     public String description;
-    public LocalDateTime createTime;
+    public LocalDate createTime;
     public boolean isFinished;
 
     public NotificationData(int teamId, int projectId, int notificationId, String title, String description, LocalDateTime createTime, boolean isFinished) {
@@ -22,7 +23,7 @@ public class NotificationData {
         this.notificationId = notificationId;
         this.title = title;
         this.description = description;
-        this.createTime = createTime;
+        this.createTime = createTime.toLocalDate();
         this.isFinished = isFinished;
     }
 

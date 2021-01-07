@@ -2,6 +2,7 @@ package com.mesh.backend.datas;
 
 import com.mesh.backend.entity.Subtasks;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -13,7 +14,7 @@ public class SubTaskData {
     public int taskId;
     public String taskName;
     public boolean isFinished;
-    public LocalDateTime createTime;
+    public LocalDate createTime;
     public String description;
     public String founder;
     public String principal;
@@ -25,7 +26,7 @@ public class SubTaskData {
         this.taskId = taskId;
         this.taskName = taskName;
         this.isFinished = isFinished;
-        this.createTime = createTime;
+        this.createTime = createTime.toLocalDate();
         this.description = description;
         this.founder = founder;
         this.principal = principal;
@@ -42,7 +43,7 @@ public class SubTaskData {
         this.taskId = subtasks.getTaskId();
         this.taskName = subtasks.getTitle();
         this.isFinished = subtasks.getFinished();
-        this.createTime = subtasks.getCreatedTime();
+        this.createTime = subtasks.getCreatedTime().toLocalDate();
         this.description = subtasks.getDescription();
         this.founder = founder;
         this.principal = principal;

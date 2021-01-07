@@ -3,13 +3,14 @@ package com.mesh.backend.datas;
 import com.mesh.backend.entity.Projects;
 import com.mesh.backend.entity.Users;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectData {
     public int projectId;
-    public LocalDateTime createTime;
+    public LocalDate createTime;
     public String projectName;
     public String adminName;
     public boolean isPublic;
@@ -18,7 +19,7 @@ public class ProjectData {
     public ProjectData(Projects projects, List<Users> users, String adminName){
         this.adminName = adminName;
         this.projectId = projects.getId();
-        this.createTime = projects.getCreatedTime();
+        this.createTime = projects.getCreatedTime().toLocalDate();
         this.projectName = projects.getName();
         this.isPublic = projects.getPublicity();
         this.members = new ArrayList<>();
