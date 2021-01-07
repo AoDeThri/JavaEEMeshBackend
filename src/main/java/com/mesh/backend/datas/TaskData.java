@@ -2,6 +2,7 @@ package com.mesh.backend.datas;
 
 import com.mesh.backend.entity.Tasks;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,8 +16,8 @@ public class TaskData {
     public String taskName;
     public boolean isFinished;
     public int priority;
-    public LocalDateTime createTime;
-    public LocalDateTime deadline;
+    public LocalDate createTime;
+    public LocalDate deadline;
     public String description;
     public String founder;
     public String principal;
@@ -31,8 +32,8 @@ public class TaskData {
         this.taskName = taskName;
         this.isFinished = isFinished;
         this.priority = priority;
-        this.createTime = createTime;
-        this.deadline = deadline;
+        this.createTime = createTime.toLocalDate();
+        this.deadline = deadline.toLocalDate();
         this.description = description;
         this.founder = founder;
         this.principal = principal;
@@ -53,8 +54,8 @@ public class TaskData {
         this.taskName = tasks.getName();
         this.isFinished = tasks.getFinished();
         this.priority = tasks.getPriority();
-        this.createTime = tasks.getCreatedTime();
-        this.deadline = tasks.getEndTime();
+        this.createTime = tasks.getCreatedTime().toLocalDate();
+        this.deadline = tasks.getEndTime().toLocalDate();
         this.description = tasks.getDescription();
         this.founder = founder;
         this.principal = principal;
